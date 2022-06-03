@@ -16,14 +16,13 @@ class Solution:
 
         if node.left and node.right:
             # 找到前驱节点
-            precursor, preParent = node.left, node
+            precursor, parent = node.left, node
             while precursor.right:
-                preParent = precursor
+                parent = precursor
                 precursor = precursor.right
             node.val = precursor.val
             precursor.val = key
             node = precursor
-            parent = preParent
         if node.left:
             node = node.left
         else:
