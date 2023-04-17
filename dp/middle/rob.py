@@ -11,7 +11,7 @@ class Solution:
     #   2.不偷当前房间，dp[k] = dp[k - 1]
     # 那么转移方程为：dp[i] = max(dp[i - 2] + nums[i], dp[i - 1])
     # dp[i]表示第i间房间最多可偷金额
-    def rob(self, nums: List[int]) -> int:
+    def rob2(self, nums: List[int]) -> int:
         n = len(nums)
         if n < 2:
             return nums[0]
@@ -20,6 +20,16 @@ class Solution:
         for i in range(2, n):
             dp[i] = max(dp[i - 2] + nums[i], dp[i - 1])
         return dp[n - 1]
+
+    def rob(self, nums: List[int]) -> int:
+        n = len(nums)
+        dp = [[0, 0] for _ in range(n)]
+        # dp[i][j] 表示 第i间是否偷的最大金额，j = 1表示偷，j = 0不偷
+        dp[0][1] = nums[0]
+        for i in range(1, n):
+            dp[i][1] = dp[i - 1][0] + nums[i]
+            dp[i][0] = max(dp[i - 1][0], dp[i - 1][1])
+        return max(dp[n - 1][0], dp[n - 1][1])
 
 
 s = Solution()
